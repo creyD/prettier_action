@@ -17,7 +17,8 @@ EOF
     git config --global user.email "actions@github.com"
     git config --global user.name "GitHub Actions"
 }
-
+echo "Installing dependencies..."
+npm install
 echo "Prettifing files..."
 prettier $INPUT_PRETTIER_OPTIONS
 
