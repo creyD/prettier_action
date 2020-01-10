@@ -19,7 +19,7 @@ EOF
 }
 echo "Installing dependencies..."
 npm install
-npm install -g prettier
+npm install --global prettier
 echo "Prettifing files..."
 prettier $INPUT_PRETTIER_OPTIONS
 
