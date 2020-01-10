@@ -19,6 +19,7 @@ EOF
 }
 echo "Installing dependencies..."
 npm install
+npm install -g prettier
 echo "Prettifing files..."
 prettier $INPUT_PRETTIER_OPTIONS
 
