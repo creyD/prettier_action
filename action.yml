@@ -19,7 +19,7 @@ inputs:
     description: Options for the 'prettier' command
     required: true
   branch:
-    description: Branch which the changes are merged to, should be ${{ github.head_ref }} for PRs
+    description: Branch which the changes are merged to
     required: true
 
 runs:
