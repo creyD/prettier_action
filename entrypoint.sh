@@ -1,5 +1,4 @@
 #!/bin/sh -l
-
 set -eu
 
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
@@ -17,9 +16,10 @@ EOF
     git config --global user.email "actions@github.com"
     git config --global user.name "GitHub Actions"
 }
+
 echo "Installing dependencies..."
-npm install
-npm install --global prettier
+npm install --silent
+npm install --silent --global prettier
 echo "Prettifing files..."
 prettier $INPUT_PRETTIER_OPTIONS
 
