@@ -21,7 +21,7 @@ echo "Installing dependencies..."
 npm install --silent
 npm install --silent --global prettier
 echo "Prettifing files..."
-prettier $INPUT_PRETTIER_OPTIONS || echo "Problem prettifing your files"; exit 1;
+prettier $INPUT_PRETTIER_OPTIONS || echo "Problem prettifing your files"
 
 if ! git diff --quiet
 then
