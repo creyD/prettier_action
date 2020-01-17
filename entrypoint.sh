@@ -1,4 +1,5 @@
 #!/bin/sh -l
+# e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 set -eu
 
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
