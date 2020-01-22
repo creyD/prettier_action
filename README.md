@@ -1,6 +1,6 @@
 # GitHub Prettier Action
 
-A GitHub action for styling files with [prettier](prettier.io).
+A GitHub action for styling files with [prettier](https://prettier.io).
 
 ## Usage
 
