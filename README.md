@@ -8,7 +8,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 
 | Parameter | Required | Default | Description |
 | - | - | - | - |
-| prettier_options | :x: | '--write "{,!(node_modules)/**/}*.js"' | Prettier options (by default it applies to the whole repository) |
+| prettier_options | :x: | '--write **/*.js' | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | 'Prettified Code!' | Custom git commit message |
 | file_pattern | :x: | '*' | Custom git add file pattern |
