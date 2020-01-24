@@ -18,11 +18,12 @@ EOF
     git config --global user.name "GitHub Actions"
 }
 
-echo "Installing dependencies..."
-npm install --silent
+echo "Installing prettier..."
 npm install --silent --global prettier
 echo "Prettifing files..."
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem prettifing your files"
+
+ls
 
 if ! git diff --quiet
 then
