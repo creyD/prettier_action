@@ -1,5 +1,7 @@
 # GitHub Prettier Action
 
+[![CodeFactor](https://www.codefactor.io/repository/github/creyd/prettier_action/badge/master)](https://www.codefactor.io/repository/github/creyd/prettier_action/overview/master)
+
 A GitHub action for styling files with [prettier](https://prettier.io).
 
 ## Usage
