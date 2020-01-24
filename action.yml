@@ -18,7 +18,7 @@ inputs:
   prettier_options:
     description: Options for the 'prettier' command
     required: false
-    default: '--write "{,!(node_modules)/**/}*.js"'
+    default: --write "{,!(node_modules)/**/}*.js"
   branch:
     description: Branch which the changes are merged to
     required: true
