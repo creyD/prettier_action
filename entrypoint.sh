@@ -4,6 +4,16 @@ set -eux
 
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
 _git_setup ( ) {
+    cat <<- EOF > $HOME/.netrc
+      machine github.com
+      login $GITHUB_ACTOR
+      password $GITHUB_TOKEN
+      machine api.github.com
+      login $GITHUB_ACTOR
+      password $GITHUB_TOKEN
+    EOF
+    chmod 600 $HOME/.netrc
+
     git config --global user.email "actions@github.com"
     git config --global user.name "GitHub Action"
 }
