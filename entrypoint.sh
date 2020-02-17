@@ -5,7 +5,7 @@ set -eux
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
 _git_setup ( ) {
     git config --global user.email "actions@github.com"
-    git config --global user.name "Prettier Action"
+    git config --global user.name "GitHub Action"
 }
 
 _git_changed() {
