@@ -18,8 +18,12 @@ EOF
     git config --global user.name "GitHub Actions"
 }
 
+# Calling method to configure the git environemnt
+git_setup
 # The remote changes should already be fetched, but as there is #4 this could resolve the problem
 git fetch
+# Switch to the actual branch
+git checkout $INPUT_BRANCH
 
 echo "Installing prettier..."
 npm install --silent --global prettier
@@ -29,10 +33,6 @@ prettier $INPUT_PRETTIER_OPTIONS || echo "Problem while prettifying your files!"
 if ! git diff --quiet
 then
   echo "Commiting and pushing changes..."
-  # Calling method to configure the git environemnt
-  git_setup
-  # Switch to the actual branch
-  git checkout $INPUT_BRANCH
   # Add changes to git
   git add "${INPUT_FILE_PATTERN}"
   # Commit and push changes back
