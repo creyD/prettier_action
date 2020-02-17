@@ -18,6 +18,9 @@ EOF
     git config --global user.name "GitHub Actions"
 }
 
+# The remote changes should already be fetched, but as there is #4 this could resolve the problem
+git fetch
+
 echo "Installing prettier..."
 npm install --silent --global prettier
 echo "Prettifing files..."
