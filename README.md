@@ -14,7 +14,9 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern |
-| branch | :white_check_mark: | - | Custom git publish branch, use ${{ github.head_ref }} if used in pull requests |
+| branch | :white_check_mark: | - | See note below! (TL;DR: On PR: `${{ github.head_ref }}`\nOn Push: branch you are pushing to) |
+
+> There are two types of action triggers in GitHub: on pull request and on push. The branch needs to be defined for both, but in case of the pull request trigger it should have `${{ github.head_ref }}` and on push it should have the branch the trigger is designed for.
 
 ### Example Config
 
