@@ -11,7 +11,7 @@ _git_setup ( ) {
       machine api.github.com
       login $GITHUB_ACTOR
       password $GITHUB_TOKEN
-    EOF
+EOF
     chmod 600 $HOME/.netrc
 
     git config --global user.email "actions@github.com"
