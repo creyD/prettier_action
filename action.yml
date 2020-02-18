@@ -1,5 +1,5 @@
-name: "Prettier Action"
-description: "Automatically runs prettier on all your pull requests."
+name: Prettier Action
+description: Automatically runs prettier on all your changes.
 
 author: Conrad Großer <grosserconrad@gmail.com>
 
@@ -7,32 +7,26 @@ inputs:
   commit_message:
     description: Commit message
     required: false
-    default: "Prettified Code!"
+    default: 'Prettified Code!'
   commit_options:
     description: Commit options
     required: false
   file_pattern:
-    description: File pattern used for "git add"
+    description: File pattern used for `git add`
     required: false
-    default: "*"
+    default: '*'
   prettier_options:
-    description: Options for the 'prettier' command
+    description: Options for the `prettier` command
     required: false
-    default: "--write **/*.js"
+    default: '--write **/*.js'
   branch:
     description: Branch which the changes are merged to
     required: true
 
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.commit_message }}
-    - ${{ inputs.commit_options }}
-    - ${{ inputs.file_pattern }}
-    - ${{ inputs.prettier_options }}
-    - ${{ inputs.branch }}
+  using: 'docker'
+  image: 'Dockerfile'
 
 branding:
-  icon: "award"
-  color: "green"
+  icon: 'award'
+  color: 'green'
