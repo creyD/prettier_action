@@ -14,13 +14,15 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern |
-| branch | :white_check_mark: | - | See note below! (TL;DR: On PR: `${{ github.head_ref }}`\nOn Push: branch you are pushing to) |
+| branch | :white_check_mark: | - | See note below! |
 
 > There are two types of action triggers in GitHub: on pull request and on push. The branch needs to be defined for both, but in case of the pull request trigger it should have `${{ github.head_ref }}` and on push it should have the branch the trigger is designed for.
 
 ### Example Config
 
-This is a small example of what your `action.yml` could look like:
+#### Example - On Pull Request
+
+This is a small example of what your `action.yml` could look like (on pull request mode):
 
 ```yaml
 name: Prettier for JS Code
@@ -37,16 +39,43 @@ jobs:
       with:
         fetch-depth: 1
     - name: Prettify the JS Code
-      uses: creyD/prettier_action@v1.0
+      uses: creyD/prettier_action@v2.0
       with:
-        prettier_options: '--no-semi --write src/**/*.js'
+        prettier_options: '--no-semi --write *.js'
         branch: ${{ github.head_ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-This simple example executes `prettier --no-semi --write src/**/*.js` after someone created a Pull Request on your repository. More documentation can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
+#### Example - On Push
+
+```yaml
+name: Prettier for JS Code
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  cleanup_tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloning the repository
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: Prettify the JS Code
+      uses: creyD/prettier_action@v2.0
+      with:
+        prettier_options: '--no-semi --write *.js'
+        branch: master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
 
 ## Issues
 
-Please report all bugs and feature request using the [GitHub issues function](https://github.com/creyD/prettier_action/issues/new).
+Please report all bugs and feature request using the [GitHub issues function](https://github.com/creyD/prettier_action/issues/new). Thanks!
