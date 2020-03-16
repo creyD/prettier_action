@@ -41,12 +41,13 @@ npm install --silent --global prettier
 
 echo "Prettifing files..."
 echo "Files:"
-prettier $INPUT_PRETTIER_OPTIONS
+prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
 
 # To keep runtime good, just continue if something was changed
 if _git_changed;
 then
   if $INPUT_DRY; then
+    echo "Prettier found unpretty files."
     exit 1
   else
     # Calling method to configure the git environemnt
