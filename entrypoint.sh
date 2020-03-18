@@ -47,7 +47,7 @@ prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_P
 if _git_changed;
 then
   if $INPUT_DRY; then
-    echo "Prettier found unpretty files."
+    echo "Prettier found unpretty files!"
     exit 1
   else
     # Calling method to configure the git environemnt
