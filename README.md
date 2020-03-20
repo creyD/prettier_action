@@ -65,7 +65,7 @@ jobs:
       with:
         fetch-depth: 1
     - name: Prettify the JS Code
-      uses: creyD/prettier_action@v2.0
+      uses: creyD/prettier_action@v2.1
       with:
         prettier_options: '--no-semi --write *.js'
         branch: master
