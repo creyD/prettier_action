@@ -12,6 +12,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | Parameter | Required | Default | Description |
 | - | :-: | :-: | - |
 | dry | :x: | False | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. |
+| prettier_version | :x: | False | Specific prettier version (by default use latest) |
 | prettier_options | :x: | `--write **/*.js` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
