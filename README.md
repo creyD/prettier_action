@@ -1,6 +1,7 @@
 # GitHub Prettier Action
 
 [![CodeFactor](https://www.codefactor.io/repository/github/creyd/prettier_action/badge/master)](https://www.codefactor.io/repository/github/creyd/prettier_action/overview/master)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 A GitHub action for styling files with [prettier](https://prettier.io).
 
