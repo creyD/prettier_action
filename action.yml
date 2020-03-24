@@ -26,6 +26,9 @@ inputs:
     description: Running the script in dry mode just shows whether there are files that should be prettified or not
     required: false
     default: False
+  prettier_version:
+    description: Specific version of prettier (by default just use the latest version)
+    required: false
 
 runs:
   using: 'docker'
