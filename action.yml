@@ -29,7 +29,6 @@ inputs:
   prettier_version:
     description: Specific version of prettier (by default just use the latest version)
     required: false
-    default: False
 
 runs:
   using: 'docker'
