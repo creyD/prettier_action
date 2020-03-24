@@ -37,10 +37,10 @@ _git_push() {
 
 # PROGRAM
 echo "Installing prettier..."
-if -z "$INPUT_PRETTIER_VERSION"; then
-  npm install --silent --global prettier
-else
+if "$INPUT_PRETTIER_VERSION"; then
   npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+else
+  npm install --silent --global prettier
 fi
 
 echo "Prettifing files..."
