@@ -52,6 +52,8 @@ jobs:
       with:
         # Push back to the same branch that was checked out
         branch: ${{ github.head_ref }}
+        # This part is also where you can pass other options, for example:
+        prettier_options: --write **/*.{js,md}
 ```
 
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
