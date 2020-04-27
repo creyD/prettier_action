@@ -25,16 +25,6 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
-# Pushes to the according upstream (origin or input branch)
-_git_push() {
-    if [ -z "$INPUT_BRANCH" ]
-    then
-        git push origin
-    else
-        git push --set-upstream origin "HEAD:$INPUT_BRANCH"
-    fi
-}
-
 # PROGRAM
 echo "Installing prettier..."
 if "$INPUT_PRETTIER_VERSION"; then
@@ -61,7 +51,7 @@ then
     git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     # Commit and push changes back
     git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"}
-    _git_push
+    git push origin
     echo "Changes pushed successfully."
   fi
 else
