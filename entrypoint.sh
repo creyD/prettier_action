@@ -57,8 +57,6 @@ then
     # Calling method to configure the git environemnt
     _git_setup
     echo "Commiting and pushing changes..."
-    # Switch to the actual branch
-    git checkout $INPUT_BRANCH || echo "Problem checking out the specified branch: $INPUT_BRANCH"
     # Add changes to git
     git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     # Commit and push changes back
