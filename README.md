@@ -22,7 +22,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern |
-| branch | :white_check_mark: | - | There are two types of action triggers in GitHub: on pull request and on push. The branch needs to be defined for both, but in case of the pull request trigger it should have `${{ github.head_ref }}` and on push it should have the branch the trigger is designed for. |
+| branch (depreciated with 3.0)| :white_check_mark: | - | There are two types of action triggers in GitHub: on pull request and on push. The branch needs to be defined for both, but in case of the pull request trigger it should have `${{ github.head_ref }}` and on push it should have the branch the trigger is designed for. |
 
 ### Example Config
 
@@ -41,14 +41,13 @@ jobs:
 
     steps:
     - name: Cloning the repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
-        fetch-depth: 1
+        ref: ${{ github.head_ref }}
     - name: Prettify the JS Code
-      uses: creyD/prettier_action@v2.1
+      uses: creyD/prettier_action@v3.0
       with:
         prettier_options: '--no-semi --write *.js'
-        branch: ${{ github.head_ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -68,14 +67,13 @@ jobs:
 
     steps:
     - name: Cloning the repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
-        fetch-depth: 1
+        ref: ${{ github.head_ref }}
     - name: Prettify the JS Code
-      uses: creyD/prettier_action@v2.1
+      uses: creyD/prettier_action@v3.0
       with:
         prettier_options: '--no-semi --write *.js'
-        branch: master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
