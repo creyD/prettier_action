@@ -27,11 +27,14 @@ _git_changed() {
 
 # PROGRAM
 echo "Installing prettier..."
-if "$INPUT_PRETTIER_VERSION"; then
-  npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
-else
-  npm install --silent --global prettier
-fi
+case $INPUT_PRETTIER_VERSION in
+    false)
+        npm install --silent --global prettier
+        ;;
+    *)
+        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        ;;
+esac
 
 echo "Prettifing files..."
 echo "Files:"
