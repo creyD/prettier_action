@@ -22,7 +22,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_options | :x: | - | Custom git commit options |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern |
-| branch | :white_check_mark: | - | Always set this to `${{ github.head_ref }}` in order to work both with pull requests and push events |
+| branch (depreciated with 3.0)| :white_check_mark: | - | Always set this to `${{ github.head_ref }}` in order to work both with pull requests and push events |
 
 ### Example Config
 
@@ -50,8 +50,6 @@ jobs:
     - name: Prettify code
       uses: creyD/prettier_action@v2.2
       with:
-        # Push back to the same branch that was checked out
-        branch: ${{ github.head_ref }}
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
 ```
