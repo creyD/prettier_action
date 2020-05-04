@@ -25,23 +25,16 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
-# Pushes to the according upstream (origin or input branch)
-_git_push() {
-    if [ -z "$INPUT_BRANCH" ]
-    then
-        git push origin
-    else
-        git push --set-upstream origin "HEAD:$INPUT_BRANCH"
-    fi
-}
-
 # PROGRAM
 echo "Installing prettier..."
-if "$INPUT_PRETTIER_VERSION"; then
-  npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
-else
-  npm install --silent --global prettier
-fi
+case $INPUT_PRETTIER_VERSION in
+    false)
+        npm install --silent --global prettier
+        ;;
+    *)
+        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        ;;
+esac
 
 echo "Prettifing files..."
 echo "Files:"
@@ -57,13 +50,11 @@ then
     # Calling method to configure the git environemnt
     _git_setup
     echo "Commiting and pushing changes..."
-    # Switch to the actual branch
-    git checkout $INPUT_BRANCH || echo "Problem checking out the specified branch: $INPUT_BRANCH"
     # Add changes to git
     git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     # Commit and push changes back
     git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"}
-    _git_push
+    git push origin
     echo "Changes pushed successfully."
   fi
 else
