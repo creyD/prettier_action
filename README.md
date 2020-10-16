@@ -20,9 +20,12 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | prettier_version | :x: | False | Specific prettier version (by default use latest) |
 | prettier_options | :x: | `--write **/*.js` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
+| same_commit | :x: | False | Whether to merge into the current commit instead of creating a new one |
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern |
 | branch (depreciated with 3.0)| :white_check_mark: | - | Always set this to `${{ github.head_ref }}` in order to work both with pull requests and push events |
+
+> Note: using the same_commit option may lead to problems if other actions are relying on the commit being the same before and after the prettier action has ran. Keep this in mind.
 
 ### Example Config
 
