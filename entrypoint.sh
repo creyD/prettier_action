@@ -29,10 +29,10 @@ _git_changed() {
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent --global prettier
+        npm install --silent --global prettier @prettier/plugin-xml
         ;;
     *)
-        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION @prettier/plugin-xml
         ;;
 esac
 
