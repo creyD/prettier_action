@@ -41,8 +41,7 @@ echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
 
 # To keep runtime good, just continue if something was changed
-if _git_changed;
-then
+if _git_changed; then
   if $INPUT_DRY; then
     echo "Prettier found unpretty files!"
     exit 1
@@ -50,8 +49,15 @@ then
     # Calling method to configure the git environemnt
     _git_setup
     echo "Commiting and pushing changes..."
-    # Add changes to git
-    git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+    if $INPUT_ONLY_CHANGED; then
+      for file in $(git diff --name-only HEAD^..HEAD)
+      do
+        git add $file
+      done
+    else
+      # Add changes to git
+      git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+    fi
     # Commit and push changes back
     git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"}
     git push origin
