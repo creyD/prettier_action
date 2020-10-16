@@ -23,10 +23,11 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_message | :x: | Prettified Code! | Custom git commit message |
 | file_pattern | :x: | * | Custom git add file pattern, can't be used with only_changed! |
 | branch (depreciated with 3.0)| :white_check_mark: | - | Always set this to `${{ github.head_ref }}` in order to work both with pull requests and push events |
-| only_changed | :x: | false | Only prettify changed files, can't be used with file_pattern! |
+| only_changed | :x: | false | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (Example 2)|
 
 ### Example Config
 
+#### Example 1 (run on push in master)
 ```yaml
 name: Continuous Integration
 
@@ -49,7 +50,37 @@ jobs:
         ref: ${{ github.head_ref }}
 
     - name: Prettify code
-      uses: creyD/prettier_action@v2.2
+      uses: creyD/prettier_action@v3.0
+      with:
+        # This part is also where you can pass other options, for example:
+        prettier_options: --write **/*.{js,md}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+#### Example 2 (using the only_changed option on PR)
+```yaml
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        # Make sure the actual branch is checked out when running on pull requests
+        ref: ${{ github.head_ref }}
+        # This is important to fetch the changes to the previous commit
+        fetch-depth: 0
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v3.0
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
