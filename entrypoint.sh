@@ -52,6 +52,7 @@ if _git_changed; then
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
       git pull
+      git add *
       git commit --amend --no-edit
     else
       if $INPUT_ONLY_CHANGED; then
