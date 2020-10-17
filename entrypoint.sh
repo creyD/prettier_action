@@ -51,7 +51,7 @@ if _git_changed; then
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
-      git commit --amend
+      git commit --amend --no-edit
     else
       if $INPUT_ONLY_CHANGED; then
         for file in $(git diff --name-only HEAD^..HEAD)
