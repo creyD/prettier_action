@@ -51,8 +51,6 @@ if _git_changed; then
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
-      git pull
-      git add *
       git commit --amend --no-edit
     else
       if $INPUT_ONLY_CHANGED; then
@@ -66,7 +64,7 @@ if _git_changed; then
       fi
       git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
     fi
-    git push origin
+    git push -f origin
     echo "Changes pushed successfully."
   fi
 else
