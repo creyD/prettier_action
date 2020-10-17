@@ -20,8 +20,8 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | prettier_version | :x: | false | Specific prettier version (by default use latest) |
 | prettier_options | :x: | `--write **/*.js` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
-| same_commit | :x: | False | Whether to merge into the current commit instead of creating a new one |
-| commit_message | :x: | Prettified Code! | Custom git commit message |
+| same_commit | :x: | False | Update the current commit instead of creating a new one, created by [Joren Broekema](https://github.com/jorenbroekema)  |
+| commit_message | :x: | Prettified Code! | Custom git commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | * | Custom git add file pattern, can't be used with only_changed! |
 | branch (depreciated with 3.0)| :white_check_mark: | - | Always set this to `${{ github.head_ref }}` in order to work both with pull requests and push events |
 | only_changed | :x: | false | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (Example 2)|

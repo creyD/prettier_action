@@ -5,11 +5,11 @@ author: Conrad Großer <grosserconrad@gmail.com>
 
 inputs:
   commit_message:
-    description: Commit message
+    description: Commit message, will be ignored if used with same_commit
     required: false
     default: 'Prettified Code!'
   same_commit:
-    description: Whether to use the current commit instead of creating a new one
+    description: Update the current commit instead of creating a new one
     required: false
     default: false
   commit_options:
