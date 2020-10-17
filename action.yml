@@ -8,6 +8,10 @@ inputs:
     description: Commit message
     required: false
     default: 'Prettified Code!'
+  same_commit:
+    description: Whether to use the current commit instead of creating a new one
+    required: false
+    default: false
   commit_options:
     description: Commit options
     required: false
