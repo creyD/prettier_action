@@ -48,21 +48,20 @@ if _git_changed; then
   else
     # Calling method to configure the git environemnt
     _git_setup
-    echo "Commiting and pushing changes..."
-    if $INPUT_ONLY_CHANGED; then
-      for file in $(git diff --name-only HEAD^..HEAD)
-      do
-        git add $file
-      done
-    else
-      # Add changes to git
-      git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
-    fi
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
-      git commit --amend --no-edit
+      git commit --amend
     else
+      if $INPUT_ONLY_CHANGED; then
+        for file in $(git diff --name-only HEAD^..HEAD)
+        do
+          git add $file
+        done
+      else
+        # Add changes to git
+        git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+      fi
       git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
     fi
     git push origin
