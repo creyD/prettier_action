@@ -53,6 +53,7 @@ if _git_changed; then
       echo "Amending the current commit..."
       git pull
       git commit --amend --no-edit
+      git push origin -f
     else
       if $INPUT_ONLY_CHANGED; then
         for file in $(git diff --name-only HEAD^..HEAD)
@@ -64,8 +65,8 @@ if _git_changed; then
         git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
       fi
       git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
+      git push origin
     fi
-    git push origin
     echo "Changes pushed successfully."
   fi
 else
