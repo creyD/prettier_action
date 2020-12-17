@@ -50,7 +50,8 @@ if _git_changed; then
     _git_setup
 
     if $INPUT_ONLY_CHANGED; then
-      for file in $(git diff --name-only HEAD^..HEAD)
+      # --diff-filter=d excludes deleted files
+      for file in $(git diff --name-only --diff-filter=d HEAD^..HEAD)
       do
         git add $file
       done
