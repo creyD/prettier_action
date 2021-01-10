@@ -1,4 +1,4 @@
-name: Prettier Action Plugins
+name: Prettier Action
 description: Automatically runs prettier on all your changes.
 
 author: Conrad Großer <grosserconrad@gmail.com>
@@ -38,7 +38,7 @@ inputs:
   prettier_plugins:
     description: Install Prettier plugins, i.e. `@prettier/prettier-php @prettier/some-other-plugin`
     required: false
-    default: false
+    default: ''
 
 runs:
   using: 'docker'
