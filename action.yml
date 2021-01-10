@@ -1,4 +1,4 @@
-name: Prettier Action Plugins
+name: Prettier Action
 description: Automatically runs prettier on all your changes.
 
 author: Conrad Großer <grosserconrad@gmail.com>
