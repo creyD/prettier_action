@@ -30,14 +30,25 @@ echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
         npm install --silent --global prettier
-        if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
-            npm install --silent --global $INPUT_PRETTIER_PLUGINS
-        fi
         ;;
     *)
         npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
+
+# Install plugins
+if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
+    for plugin in $INPUT_PRETTIER_PLUGINS; do
+        echo "checking $plugin"
+        # check regex against @prettier/xyz
+        if ! echo "$plugin" | grep -Eq '(@prettier\/)+(plugin-[a-z\-]+)'; then
+            echo "$plugin does not seem to be a valid @prettier/plugin-x plugin."
+            exit 1
+        fi
+        echo "$plugin seem to be a valid Prettier plugin"
+    done
+    npm install --silent --global $INPUT_PRETTIER_PLUGINS
+fi
 
 echo "Prettifing files..."
 echo "Files:"
