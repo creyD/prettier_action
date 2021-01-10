@@ -30,6 +30,9 @@ echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
         npm install --silent --global prettier
+        if $INPUT_PRETTIER_PLUGINS; then
+            npm install --silent --global $INPUT_PRETTIER_PLUGINS
+        fi
         ;;
     *)
         npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
