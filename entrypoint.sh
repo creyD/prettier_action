@@ -41,7 +41,7 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
     for plugin in $INPUT_PRETTIER_PLUGINS; do
         # check regex against @prettier/xyz
         REGEX = '(@prettier\/)+(plugin-[a-z\-]+)'
-        if ! [ "$plugin" =~ "$REGEX" ]
+        if ! [ "$plugin" =~ "$REGEX" ]; then
             echo "Specified plugins does not seem to be valid @prettier/x plugins."
             exit 1
         fi
