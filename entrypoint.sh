@@ -60,9 +60,8 @@ echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
 
 # Ignore node modules and other action created files
-echo "package_lock.json
-node_modules/
-" >> .gitignore
+git update-index --skip-worktree package_lock.json
+git update-index --skip-worktree node_modules/
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
@@ -83,7 +82,6 @@ if _git_changed; then
       # Add changes to git
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     fi
-    git rm .gitignore
 
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
