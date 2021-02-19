@@ -41,8 +41,22 @@ inputs:
     default: ''
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    - name: prettier
+      shell: bash
+      run: >-
+        PATH=$(cd $GITHUB_ACTION_PATH; npm bin):$PATH
+        INPUT_COMMIT_MESSAGE="${{ inputs.commit_message }}"
+        INPUT_COMMIT_OPTIONS="${{ inputs.commit_options }}"
+        INPUT_DRY="${{ inputs.dry }}"
+        INPUT_FILE_PATTERN="${{ inputs.file_pattern }}"
+        INPUT_ONLY_CHANGED="${{ inputs.only_changed }}"
+        INPUT_PRETTIER_OPTIONS="${{ inputs.prettier_options }}"
+        INPUT_PRETTIER_PLUGINS="${{ inputs.prettier_plugins }}"
+        INPUT_PRETTIER_VERSION="${{ inputs.prettier_version }}"
+        INPUT_SAME_COMMIT="${{ inputs.same_commit }}"
+        $GITHUB_ACTION_PATH/entrypoint.sh
 
 branding:
   icon: 'award'
