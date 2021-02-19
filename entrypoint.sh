@@ -69,9 +69,10 @@ if _git_changed; then
     _git_setup
 
     # Ignore node modules and other action created files
-    git update-index --skip-worktree package.json
-    git update-index --skip-worktree node_modules/
-    git update-index --skip-worktree package-lock.json
+    echo "package_lock.json
+    node_modules/
+    .gitignore
+    " >> .gitignore
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
