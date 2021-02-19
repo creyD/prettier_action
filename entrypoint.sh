@@ -73,7 +73,7 @@ if _git_changed; then
     node_modules/
     .gitignore
     " >> .gitignore
-    git config --global core.excludesfile .gitignore
+    git update-index --skip-worktree .gitignore
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
