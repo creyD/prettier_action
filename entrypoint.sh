@@ -1,7 +1,7 @@
 #!/bin/bash
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
-set -eux
+set -eu
 
 # FUNCTIONS
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
@@ -26,9 +26,11 @@ _git_changed() {
 }
 
 (
-cd "$GITHUB_ACTION_PATH"
 
 # PROGRAM
+# Changing to the directory
+cd "$GITHUB_ACTION_PATH"
+
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
@@ -65,6 +67,13 @@ if _git_changed; then
   else
     # Calling method to configure the git environemnt
     _git_setup
+
+    # Ignore node modules and other action created files
+    "/node_modules/
+    package-lock.json
+    package.json
+    " >> .git/info/exclude
+    git update-index --assume-unchanged */node_modules/* package.json package-lock.json
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
