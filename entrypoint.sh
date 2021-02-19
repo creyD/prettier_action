@@ -69,7 +69,7 @@ if _git_changed; then
     _git_setup
 
     # Ignore node modules and other action created files
-    "/node_modules/
+    echo "/node_modules/
     package-lock.json
     package.json
     " >> .git/info/exclude
