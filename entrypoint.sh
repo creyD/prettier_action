@@ -26,12 +26,8 @@ _git_changed() {
 }
 
 (
-if [ -n "$GITHUB_ACTION_PATH" ]; then
-    cd $GITHUB_ACTION_PATH
-    maybe_global=''
-else
-    maybe_global=--global
-fi
+
+echo ${{ inputs.prettier_options }}
 
 # PROGRAM
 echo "Installing prettier..."
