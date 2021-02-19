@@ -1,7 +1,7 @@
 #!/bin/bash
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
-set -eu
+set -eux
 
 # FUNCTIONS
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
@@ -25,16 +25,20 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
-(
+if [ -n "$GITHUB_ACTION_PATH" ]; then
+    INPUT_IS_GLOBAL=''
+else
+    INPUT_IS_GLOBAL=--global
+fi
 
 # PROGRAM
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent prettier
+        npm install --silent $INPUT_IS_GLOBAL prettier
         ;;
     *)
-        npm install --silent prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent $INPUT_IS_GLOBAL prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
@@ -48,7 +52,7 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
             exit 1
         fi
     done
-    npm install --silent $INPUT_PRETTIER_PLUGINS
+    npm install --silent $INPUT_IS_GLOBAL $INPUT_PRETTIER_PLUGINS
 fi
 )
 
