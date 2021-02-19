@@ -25,6 +25,7 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
+(
 if [ -n "$GITHUB_ACTION_PATH" ]; then
     INPUT_IS_GLOBAL=''
 else
