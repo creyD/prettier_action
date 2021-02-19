@@ -59,6 +59,12 @@ echo "Prettifing files..."
 echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
 
+# Ignore node modules and other action created files
+echo "package_lock.json
+node_modules/
+" >> .gitignore
+git update-index --assume-unchanged .gitignore
+
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
   if $INPUT_DRY; then
@@ -67,13 +73,6 @@ if _git_changed; then
   else
     # Calling method to configure the git environemnt
     _git_setup
-
-    # Ignore node modules and other action created files
-    echo "package_lock.json
-    node_modules/
-    .gitignore
-    " >> .gitignore
-    git update-index --skip-worktree .gitignore
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
