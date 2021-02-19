@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
 set -eu
@@ -25,14 +25,22 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
+(
+if [ -n "$GITHUB_ACTION_PATH" ]; then
+    cd $GITHUB_ACTION_PATH
+    maybe_global=''
+else
+    maybe_global=--global
+fi
+
 # PROGRAM
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent --global prettier
+        npm install --silent $maybe_global prettier
         ;;
     *)
-        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent $maybe_global prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
@@ -46,8 +54,9 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
             exit 1
         fi
     done
-    npm install --silent --global $INPUT_PRETTIER_PLUGINS
+    npm install --silent $maybe_global $INPUT_PRETTIER_PLUGINS
 fi
+)
 
 echo "Prettifing files..."
 echo "Files:"
