@@ -46,6 +46,16 @@ runs:
     - name: Prettify code!
       shell: bash
       run: ${{ github.action_path }}/entrypoint.sh
+      env:
+        INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
+        INPUT_COMMIT_OPTIONS: ${{ inputs.commit_options }}
+        INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
+        INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
+        INPUT_DRY: ${{ inputs.dry }}
+        INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
+        INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
+        INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
 
 branding:
   icon: "award"

@@ -27,8 +27,6 @@ _git_changed() {
 
 (
 
-echo ${{ inputs.prettier_options }}
-
 # PROGRAM
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
