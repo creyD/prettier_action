@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
 set -eu
@@ -25,14 +25,18 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
+(
 # PROGRAM
+# Changing to the directory
+cd "$GITHUB_ACTION_PATH"
+
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent --global prettier
+        npm install --silent prettier
         ;;
     *)
-        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
@@ -46,12 +50,17 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
             exit 1
         fi
     done
-    npm install --silent --global $INPUT_PRETTIER_PLUGINS
+    npm install --silent $INPUT_PRETTIER_PLUGINS
 fi
+)
 
 echo "Prettifing files..."
 echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
+
+# Ignore node modules and other action created files
+rm -r node_modules/ || echo "No node_modules/ folder."
+git reset --hard package-lock.json || rm package-lock.json || echo "No package-lock.json file."
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
