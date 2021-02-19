@@ -26,20 +26,16 @@ _git_changed() {
 }
 
 (
-if [ -n "$GITHUB_ACTION_PATH" ]; then
-    INPUT_IS_GLOBAL=''
-else
-    INPUT_IS_GLOBAL=--global
-fi
+cd "$GITHUB_ACTION_PATH"
 
 # PROGRAM
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent $INPUT_IS_GLOBAL prettier
+        npm install --silent prettier
         ;;
     *)
-        npm install --silent $INPUT_IS_GLOBAL prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
@@ -53,7 +49,7 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
             exit 1
         fi
     done
-    npm install --silent $INPUT_IS_GLOBAL $INPUT_PRETTIER_PLUGINS
+    npm install --silent $INPUT_PRETTIER_PLUGINS
 fi
 )
 
