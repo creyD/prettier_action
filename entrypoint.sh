@@ -37,10 +37,10 @@ fi
 echo "Installing prettier..."
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent $maybe_global prettier
+        npm install --silent -g prettier
         ;;
     *)
-        npm install --silent $maybe_global prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent -g prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
