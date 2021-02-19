@@ -69,11 +69,11 @@ if _git_changed; then
     _git_setup
 
     # Ignore node modules and other action created files
-    echo "/node_modules/
+    echo "*/node_modules/*
     package-lock.json
     package.json
     " >> .git/info/exclude
-    git update-index --assume-unchanged */node_modules/* package.json package-lock.json
+    git update-index --assume-unchanged node_modules/ package.json package-lock.json
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
