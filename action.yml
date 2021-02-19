@@ -45,7 +45,9 @@ runs:
   steps:
     - name: Prettify code!
       shell: bash
-      run: ${{ github.action_path }}/entrypoint.sh
+      run: >-
+        PATH=$(cd $GITHUB_ACTION_PATH; npm bin):$PATH
+        ${{ github.action_path }}/entrypoint.sh
       env:
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
         INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
@@ -56,7 +58,6 @@ runs:
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
-        PATH: $(cd $GITHUB_ACTION_PATH; npm bin):$PATH
 
 branding:
   icon: "award"
