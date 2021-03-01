@@ -36,7 +36,7 @@ inputs:
     required: false
     default: false
   prettier_plugins:
-    description: Install Prettier plugins, i.e. `@prettier/prettier-php @prettier/some-other-plugin`
+    description: Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other`
     required: false
     default: ""
 
