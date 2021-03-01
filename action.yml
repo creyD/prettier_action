@@ -38,7 +38,6 @@ inputs:
   prettier_plugins:
     description: Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other`
     required: false
-    default: ""
 
 runs:
   using: "composite"
