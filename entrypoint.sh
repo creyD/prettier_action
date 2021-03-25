@@ -51,8 +51,7 @@ fi
 
 echo "Prettifying files..."
 echo "Files:"
-prettier $INPUT_PRETTIER_OPTIONS
-PRETTIER_RESULT=$?
+PRETTIER_RESULT=$(prettier $INPUT_PRETTIER_OPTIONS)
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
