@@ -49,7 +49,7 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
     npm install --silent --global $INPUT_PRETTIER_PLUGINS
 fi
 
-echo "Prettifing files..."
+echo "Prettifying files..."
 echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
 PRETTIER_RESULT=$?
