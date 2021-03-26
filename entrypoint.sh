@@ -2,6 +2,7 @@
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
 set -eu
+set -o pipefail
 
 # FUNCTIONS
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
@@ -51,13 +52,14 @@ fi
 
 echo "Prettifying files..."
 echo "Files:"
-PRETTIER_RESULT=$(prettier $INPUT_PRETTIER_OPTIONS)
+prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
+PRETTIER_RESULT=$?
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
   if $INPUT_DRY; then
     if [[ "$PRETTIER_RESULT" -eq 1 ]]; then
-      echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
+      
       echo "Prettier found unpretty files!"
       exit 1
     else
