@@ -57,7 +57,7 @@ prettier $INPUT_PRETTIER_OPTIONS || { PRETTIER_RESULT=$?; echo "Problem running 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
   if $INPUT_DRY; then
-    if [[ "$PRETTIER_RESULT" -eq 1 ]]; then
+    if [ "$PRETTIER_RESULT" -eq 1 ]; then
       echo "Prettier found unpretty files!"
       exit 1
     else
