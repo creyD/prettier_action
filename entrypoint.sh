@@ -55,9 +55,10 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
 fi
 )
 
-echo "Prettifing files..."
+PRETTIER_RESULT=0
+echo "Prettifying files..."
 echo "Files:"
-prettier $INPUT_PRETTIER_OPTIONS || echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"
+prettier $INPUT_PRETTIER_OPTIONS || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; }
 
 # Ignore node modules and other action created files
 rm -r node_modules/ || echo "No node_modules/ folder."
@@ -66,8 +67,12 @@ git reset --hard package-lock.json || rm package-lock.json || echo "No package-
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
   if $INPUT_DRY; then
-    echo "Prettier found unpretty files!"
-    exit 1
+    if [ "$PRETTIER_RESULT" -eq 1 ]; then
+      echo "Prettier found unpretty files!"
+      exit 1
+    else
+      echo "No unpretty files! Finishing dry-run."
+    fi
   else
     # Calling method to configure the git environemnt
     _git_setup
