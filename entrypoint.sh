@@ -96,7 +96,7 @@ if _git_changed; then
       git push origin -f
     else
       git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
-      git push origin
+      git push origin $INPUT_PUSH_OPTIONS
     fi
     echo "Changes pushed successfully."
   fi
