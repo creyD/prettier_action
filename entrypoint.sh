@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 # e is for exiting the script automatically if a command fails, u is for exiting if a variable is not set
 # x would be for showing the commands before they are executed
 set -eu
+shopt -s globstar nullglob
 
 # FUNCTIONS
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
@@ -29,14 +30,19 @@ _git_changes() {
     git diff
 }
 
+(
 # PROGRAM
+# Changing to the directory
+cd "$GITHUB_ACTION_PATH"
+
 echo "Installing prettier..."
+
 case $INPUT_PRETTIER_VERSION in
     false)
-        npm install --silent --global prettier
+        npm install --silent prettier
         ;;
     *)
-        npm install --silent --global prettier@$INPUT_PRETTIER_VERSION
+        npm install --silent prettier@$INPUT_PRETTIER_VERSION
         ;;
 esac
 
@@ -52,11 +58,16 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
     done
     npm install --silent --global $INPUT_PRETTIER_PLUGINS
 fi
+)
 
 PRETTIER_RESULT=0
 echo "Prettifying files..."
 echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; }
+
+# Ignore node modules and other action created files
+rm -r node_modules/ || echo "No node_modules/ folder."
+git reset --hard package-lock.json || rm package-lock.json || echo "No package-lock.json file."
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
@@ -89,7 +100,7 @@ if _git_changed; then
       git push origin -f
     else
       git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
-      git push origin
+      git push origin $INPUT_PUSH_OPTIONS
     fi
     echo "Changes pushed successfully."
   fi
