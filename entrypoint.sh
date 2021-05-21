@@ -26,12 +26,17 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
+_git_changes() {
+    git diff
+}
+
 (
 # PROGRAM
 # Changing to the directory
 cd "$GITHUB_ACTION_PATH"
 
 echo "Installing prettier..."
+
 case $INPUT_PRETTIER_VERSION in
     false)
         npm install --silent prettier
@@ -66,13 +71,12 @@ git reset --hard package-lock.json || rm package-lock.json || echo "No package-
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
+  # case when --write is used with dry-run so if something is unpretty there will always have _git_changed
   if $INPUT_DRY; then
-    if [ "$PRETTIER_RESULT" -eq 1 ]; then
-      echo "Prettier found unpretty files!"
-      exit 1
-    else
-      echo "No unpretty files! Finishing dry-run."
-    fi
+    echo "Unpretty Files Changes:"
+    _git_changes
+    echo "Finishing dry-run. Exiting before committing."
+    exit 1
   else
     # Calling method to configure the git environemnt
     _git_setup
@@ -101,5 +105,13 @@ if _git_changed; then
     echo "Changes pushed successfully."
   fi
 else
+  # case when --check is used so there will never have something to commit but there are unpretty files
+  if [ "$PRETTIER_RESULT" -eq 1 ]; then
+    echo "Prettier found unpretty files!"
+    exit 1
+  else
+    echo "Finishing dry-run."
+  fi
+  echo "No unpretty files!"
   echo "Nothing to commit. Exiting."
 fi
