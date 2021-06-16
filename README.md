@@ -26,6 +26,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
 | prettier_plugins | :x: | - | Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other` |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
+| github_token | :x: | `${{ github.token }}` | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
 > Note: using the same_commit option may lead to problems if other actions are relying on the commit being the same before and after the prettier action has ran. Keep this in mind.
 
@@ -58,8 +59,6 @@ jobs:
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 #### Example 2 (using the only_changed or same_commit option on PR)
@@ -89,8 +88,36 @@ jobs:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
         only_changed: True
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+#### Example 3 (using a custom access token on PR)
+```yaml
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.head_ref }}
+        # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+        persist-credentials: false
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v3.3
+      with:
+        prettier_options: --write **/*.{js,md}
+        only_changed: True
+        # Set your custom token
+        github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 ```
 
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
