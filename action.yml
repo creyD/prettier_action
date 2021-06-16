@@ -39,6 +39,10 @@ inputs:
     description: Install Prettier plugins, i.e. `@prettier/prettier-php @prettier/some-other-plugin`
     required: false
     default: ''
+  github_token:
+    description: GitHub Token or PAT token used to authenticate against a repository
+    required: false
+    default: ${{ github.token }}
 
 runs:
   using: 'docker'
