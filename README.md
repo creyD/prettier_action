@@ -16,14 +16,15 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 
 | Parameter | Required | Default | Description |
 | - | :-: | :-: | - |
-| dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. |
+| dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. Recommended to use with prettier_options --check |
 | prettier_version | :x: | `false` | Specific prettier version (by default use latest) |
 | prettier_options | :x: | `"--write **/*.js"` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
+| push_options | :x: | - | Custom git push options |
 | same_commit | :x: | `false` | Update the current commit instead of creating a new one, created by [Joren Broekema](https://github.com/jorenbroekema), this command works only with the checkout action set to fetch depth '0' (see example 2)  |
 | commit_message | :x: | `"Prettified Code!"` | Custom git commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
-| prettier_plugins | :x: | ` ` | Install Prettier plugins, i.e. `@prettier/prettier-php @prettier/some-other-plugin` |
+| prettier_plugins | :x: | - | Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other` |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
 | github_token | :x: | `${{ github.token }}` | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
