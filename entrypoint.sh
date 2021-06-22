@@ -66,8 +66,17 @@ echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; }
 
 # Ignore node modules and other action created files
-rm -r node_modules/ || echo "No node_modules/ folder."
-git reset --hard package-lock.json || rm package-lock.json || echo "No package-lock.json file."
+if [ -d 'node_modules' ]; then
+  rm -r node_modules/
+else
+  echo "No node_modules/ folder."
+fi
+
+if [ -f 'package-lock.json' ]; then
+  git reset --hard package-lock.json || rm package-lock.json
+else
+  echo "No package-lock.json file."
+fi
 
 # To keep runtime good, just continue if something was changed
 if _git_changed; then
