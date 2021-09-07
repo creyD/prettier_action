@@ -120,6 +120,34 @@ jobs:
         github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 ```
 
+#### Example 4 (dry run)
+```yaml
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.head_ref }}
+        # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+        persist-credentials: false
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v3.3
+      with:
+        dry: True
+        github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+```
+
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
 
 ## Issues
