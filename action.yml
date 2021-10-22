@@ -8,6 +8,10 @@ inputs:
     description: Commit message, will be ignored if used with same_commit
     required: false
     default: "Prettified Code!"
+  commit_description:
+    description: Extended commit message, will be ignored if used with same_commit
+    required: false
+    default: ""
   same_commit:
     description: Update the current commit instead of creating a new one
     required: false
@@ -58,6 +62,7 @@ runs:
         ${{ github.action_path }}/entrypoint.sh
       env:
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        INPUT_COMMIT_DESCRIPTION: ${{ inputs.commit_description }}
         INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
         INPUT_COMMIT_OPTIONS: ${{ inputs.commit_options }}
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
