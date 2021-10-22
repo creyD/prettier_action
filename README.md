@@ -23,7 +23,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | push_options | :x: | - | Custom git push options |
 | same_commit | :x: | `false` | Update the current commit instead of creating a new one, created by [Joren Broekema](https://github.com/jorenbroekema), this command works only with the checkout action set to fetch depth '0' (see example 2)  |
 | commit_message | :x: | `"Prettified Code!"` | Custom git commit message, will be ignored if used with `same_commit` |
-| commit_description | :x: | - | Custom git exteneded commit message, will be ignored if used with `same_commit` |
+| commit_description | :x: | - | Custom git extended commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
 | prettier_plugins | :x: | - | Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other` |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
