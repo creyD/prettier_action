@@ -74,7 +74,7 @@ else
 fi
 
 if [ -f 'package-lock.json' ]; then
-  git reset --hard package-lock.json || rm package-lock.json
+  git checkout -- package-lock.json
 else
   echo "No package-lock.json file."
 fi
