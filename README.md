@@ -34,7 +34,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 
 ### Example Config
 
-#### Example 1 (run on push in master)
+#### Example 1 (run on push in main)
 ```yaml
 name: Continuous Integration
 
@@ -43,7 +43,7 @@ on:
   pull_request:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   prettier:
@@ -69,7 +69,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
@@ -98,7 +98,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
@@ -128,7 +128,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
