@@ -34,7 +34,8 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 
 ### Example Config
 
-#### Example 1 (run on push in main)
+> Hint: if you still use the old naming convention or generally a different branch name, please replace the `main` in the following configurations.
+#### Example 1 (run on push in branch main)
 ```yaml
 name: Continuous Integration
 
