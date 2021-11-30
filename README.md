@@ -18,11 +18,13 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | - | :-: | :-: | - |
 | dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. Recommended to use with prettier_options --check |
 | prettier_version | :x: | `false` | Specific prettier version (by default use latest) |
+| working_directory | :x: | `false` | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
 | prettier_options | :x: | `"--write **/*.js"` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
 | push_options | :x: | - | Custom git push options |
 | same_commit | :x: | `false` | Update the current commit instead of creating a new one, created by [Joren Broekema](https://github.com/jorenbroekema), this command works only with the checkout action set to fetch depth '0' (see example 2)  |
 | commit_message | :x: | `"Prettified Code!"` | Custom git commit message, will be ignored if used with `same_commit` |
+| commit_description | :x: | - | Custom git extended commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
 | prettier_plugins | :x: | - | Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other` |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
@@ -32,7 +34,8 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 
 ### Example Config
 
-#### Example 1 (run on push in master)
+> Hint: if you still use the old naming convention or generally a different branch name, please replace the `main` in the following configurations.
+#### Example 1 (run on push in branch main)
 ```yaml
 name: Continuous Integration
 
@@ -41,7 +44,7 @@ on:
   pull_request:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   prettier:
@@ -55,7 +58,7 @@ jobs:
         ref: ${{ github.head_ref }}
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.0
+      uses: creyD/prettier_action@v4.1
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
@@ -67,7 +70,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
@@ -83,7 +86,7 @@ jobs:
         fetch-depth: 0
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.0
+      uses: creyD/prettier_action@v4.1
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
@@ -96,7 +99,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
@@ -112,7 +115,7 @@ jobs:
         persist-credentials: false
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.0
+      uses: creyD/prettier_action@v4.1
       with:
         prettier_options: --write **/*.{js,md}
         only_changed: True
@@ -126,7 +129,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   prettier:
@@ -142,7 +145,7 @@ jobs:
         persist-credentials: false
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.0
+      uses: creyD/prettier_action@v4.1
       with:
         dry: True
         github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}

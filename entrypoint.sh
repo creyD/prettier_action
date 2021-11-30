@@ -37,6 +37,14 @@ cd "$GITHUB_ACTION_PATH"
 
 echo "Installing prettier..."
 
+case $INPUT_WORKING_DIRECTORY in
+    false)
+        ;;
+    *)
+        cd $INPUT_WORKING_DIRECTORY
+        ;;
+esac
+
 case $INPUT_PRETTIER_VERSION in
     false)
         npm install --silent prettier
@@ -74,7 +82,7 @@ else
 fi
 
 if [ -f 'package-lock.json' ]; then
-  git reset --hard package-lock.json || rm package-lock.json
+  git checkout -- package-lock.json
 else
   echo "No package-lock.json file."
 fi
@@ -93,10 +101,13 @@ if _git_changed; then
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
+      OLDIFS="$IFS"
+      IFS=$'\n'
       for file in $(git diff --name-only --diff-filter=d HEAD^..HEAD)
       do
-        git add $file
+        git add "$file"
       done
+      IFS="$OLDIFS"
     else
       # Add changes to git
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
@@ -109,7 +120,7 @@ if _git_changed; then
       git commit --amend --no-edit
       git push origin -f
     else
-      git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
+      git commit -m "$INPUT_COMMIT_MESSAGE" if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]; then echo '-m "$INPUT_COMMIT_DESCRIPTION"' fi --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
       git push origin ${INPUT_PUSH_OPTIONS:-}
     fi
     echo "Changes pushed successfully."
