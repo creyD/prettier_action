@@ -38,6 +38,10 @@ inputs:
     description: Specific version of prettier (by default just use the latest version)
     required: false
     default: false
+  working_directory:
+    description: Specify a directory to cd into before installing prettier and running it
+    required: false
+    default: false
   only_changed:
     description: Only prettify files changed in the last commit, can't be used with file_pattern!
     required: false
@@ -45,12 +49,11 @@ inputs:
   prettier_plugins:
     description: Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other`
     required: false
-    default: ''
+    default: ""
   github_token:
     description: GitHub Token or PAT token used to authenticate against a repository
     required: false
     default: ${{ github.token }}
-
 
 runs:
   using: "composite"
@@ -71,6 +74,7 @@ runs:
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
+        INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
 
 branding:
