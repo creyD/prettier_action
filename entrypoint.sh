@@ -101,10 +101,13 @@ if _git_changed; then
 
     if $INPUT_ONLY_CHANGED; then
       # --diff-filter=d excludes deleted files
+      OLDIFS="$IFS"
+      IFS=$'\n'
       for file in $(git diff --name-only --diff-filter=d HEAD^..HEAD)
       do
-        git add $file
+        git add "$file"
       done
+      IFS="$OLDIFS"
     else
       # Add changes to git
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
