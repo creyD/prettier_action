@@ -117,9 +117,9 @@ if _git_changed; then
     IF_COMMIT_DESC=""
     if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]
     then
-        $IF_COMMIT_DESC=" -m '$INPUT_COMMIT_DESCRIPTION'"
+        IF_COMMIT_DESC=" -m '$INPUT_COMMIT_DESCRIPTION'"
     else
-        $IF_COMMIT_DESC=""
+        IF_COMMIT_DESC=""
     fi
 
     # Commit and push changes back
