@@ -58,7 +58,7 @@ jobs:
         ref: ${{ github.head_ref }}
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.1
+      uses: creyD/prettier_action@v4.1.1
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
@@ -86,7 +86,7 @@ jobs:
         fetch-depth: 0
 
     - name: Prettify code
-      uses: creyD/prettier_action@v4.1
+      uses: creyD/prettier_action@v4.1.1
       with:
         # This part is also where you can pass other options, for example:
         prettier_options: --write **/*.{js,md}
