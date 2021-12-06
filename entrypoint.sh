@@ -113,6 +113,15 @@ if _git_changed; then
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     fi
 
+    # Check if the commit description was populated
+    IF_COMMIT_DESC=""
+    if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]
+    then
+        IF_COMMIT_DESC=" -m '$INPUT_COMMIT_DESCRIPTION'"
+    else
+        IF_COMMIT_DESC=""
+    fi
+
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
@@ -120,7 +129,7 @@ if _git_changed; then
       git commit --amend --no-edit
       git push origin -f
     else
-      git commit -m "$INPUT_COMMIT_MESSAGE" if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]; then echo '-m "$INPUT_COMMIT_DESCRIPTION"' fi --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
+      git commit -m "$INPUT_COMMIT_MESSAGE""$IF_COMMIT_DESC" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
       git push origin ${INPUT_PUSH_OPTIONS:-}
     fi
     echo "Changes pushed successfully."
