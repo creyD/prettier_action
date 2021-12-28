@@ -120,8 +120,7 @@ if _git_changed; then
       git commit --amend --no-edit
       git push origin -f
     else
-      if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]
-      then
+      if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]; then
           git commit -m "$INPUT_COMMIT_MESSAGE" -m "$INPUT_COMMIT_DESCRIPTION" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
       else
           git commit -m "$INPUT_COMMIT_MESSAGE" --author="$GITHUB_ACTOR <$GITHUB_ACTOR@users.noreply.github.com>" ${INPUT_COMMIT_OPTIONS:+"$INPUT_COMMIT_OPTIONS"} || echo "No files added to commit"
