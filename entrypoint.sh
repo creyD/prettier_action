@@ -64,7 +64,7 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
             exit 1
         fi
     done
-    npm install --silent --global $INPUT_PRETTIER_PLUGINS
+    npm install --silent $INPUT_PRETTIER_PLUGINS
 fi
 )
 
