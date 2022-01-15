@@ -3,12 +3,11 @@ name: Feature request
 about: Request a feature!
 title: "[FEATURE]"
 labels: enhancement
-assignees: ''
-
+assignees: ""
 ---
 
 **What would you like to change about the program?**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+A clear and concise description of what the problem is.
 
 **Why do you think this is a cool idea?**
 A clear and concise description of why your feature would improve the program.
