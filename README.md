@@ -7,7 +7,6 @@
 [![Contributors](https://img.shields.io/github/contributors-anon/creyD/prettier_action)](https://github.com/creyD/prettier_action/graphs/contributors)
 [![Issues](https://img.shields.io/github/issues/creyD/prettier_action)](https://github.com/creyD/prettier_action/issues)
 
-
 A GitHub action for styling files with [prettier](https://prettier.io).
 
 ## Usage
@@ -35,7 +34,9 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 ### Example Config
 
 > Hint: if you still use the old naming convention or generally a different branch name, please replace the `main` in the following configurations.
+
 #### Example 1 (run on push in branch main)
+
 ```yaml
 name: Continuous Integration
 
@@ -44,27 +45,28 @@ on:
   pull_request:
   push:
     branches:
-    - main
+      - main
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        # Make sure the actual branch is checked out when running on pull requests
-        ref: ${{ github.head_ref }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v4.1.1
-      with:
-        # This part is also where you can pass other options, for example:
-        prettier_options: --write **/*.{js,md}
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,md}
 ```
 
 #### Example 2 (using the only_changed or same_commit option on PR)
+
 ```yaml
 name: Continuous Integration
 
@@ -77,23 +79,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        # Make sure the actual branch is checked out when running on pull requests
-        ref: ${{ github.head_ref }}
-        # This is important to fetch the changes to the previous commit
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v4.1.1
-      with:
-        # This part is also where you can pass other options, for example:
-        prettier_options: --write **/*.{js,md}
-        only_changed: True
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,md}
+          only_changed: True
 ```
 
 #### Example 3 (using a custom access token on PR)
+
 ```yaml
 name: Continuous Integration
 
@@ -106,24 +109,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.head_ref }}
-        # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
-        persist-credentials: false
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+          persist-credentials: false
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v4.1
-      with:
-        prettier_options: --write **/*.{js,md}
-        only_changed: True
-        # Set your custom token
-        github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
+        with:
+          prettier_options: --write **/*.{js,md}
+          only_changed: True
+          # Set your custom token
+          github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 ```
 
 #### Example 4 (dry run)
+
 ```yaml
 name: Continuous Integration
 
@@ -136,19 +140,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.head_ref }}
-        # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
-        persist-credentials: false
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          # Make sure the value of GITHUB_TOKEN will not be persisted in repo's config
+          persist-credentials: false
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v4.1
-      with:
-        dry: True
-        github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
+        with:
+          dry: True
+          github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 ```
 
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).

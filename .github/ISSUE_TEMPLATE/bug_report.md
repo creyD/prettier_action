@@ -3,12 +3,12 @@ name: Bug report
 about: Report a problem!
 title: "[BUG]"
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 **What exactly happened?**
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -21,8 +21,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Where did you encounter the problem?**
- - OS: [e.g. iOS]
+
 - Repo: [e.g. URL to your repository]
- - Version [e.g. 22]
+- Version [e.g. 22]
 
 <!-- If you think you can help us with that, please note it here! -->
