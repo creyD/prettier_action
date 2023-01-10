@@ -25,7 +25,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_message | :x: | `"Prettified Code!"` | Custom git commit message, will be ignored if used with `same_commit` |
 | commit_description | :x: | - | Custom git extended commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
-| prettier_plugins | :x: | - | Install Prettier plugins, i.e. `@prettier/plugin-php @prettier/plugin-other` |
+| prettier_plugins | :x: | - | Install Prettier plugins, i.e. `"@prettier/plugin-php" "@prettier/plugin-other"`. Must be wrapped in quotes since @ is a reserved character in YAML. |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
 | github_token | :x: | `${{ github.token }}` | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
@@ -110,7 +110,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -141,7 +141,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
