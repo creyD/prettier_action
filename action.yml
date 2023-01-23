@@ -54,6 +54,10 @@ inputs:
     description: GitHub Token or PAT token used to authenticate against a repository
     required: false
     default: ${{ github.token }}
+  clean_node_folder:
+    description: Remove the node_modules folder before committing changes
+    required: false
+    default: true
 
 runs:
   using: "composite"
@@ -76,6 +80,7 @@ runs:
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
 
 branding:
   icon: "award"
