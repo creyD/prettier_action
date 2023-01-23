@@ -74,6 +74,8 @@ echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS \
   || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; }
 
+echo "Prettier result: $PRETTIER_RESULT"
+
 # Removing the node_modules folder, so it doesn't get committed if it is not added in gitignore
 if $INPUT_CLEAN_NODE_FOLDER; then
   echo "Deleting node_modules/ folder..."
