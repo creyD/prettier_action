@@ -61,7 +61,7 @@ runs:
     - name: Prettify code!
       shell: bash
       run: >-
-        PATH=$(cd $GITHUB_ACTION_PATH; npm bin):$PATH
+        PATH=$GITHUB_ACTION_PATH/node_modules/.bin:$PATH
         ${{ github.action_path }}/entrypoint.sh
       env:
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
