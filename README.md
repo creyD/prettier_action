@@ -26,6 +26,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | commit_description | :x: | - | Custom git extended commit message, will be ignored if used with `same_commit` |
 | file_pattern | :x: | `*` | Custom git add file pattern, can't be used with only_changed! |
 | prettier_plugins | :x: | - | Install Prettier plugins, i.e. `"@prettier/plugin-php" "@prettier/plugin-other"`. Must be wrapped in quotes since @ is a reserved character in YAML. |
+| clean_node_folder | :x: | `true` | Delete the node_modules folder before committing |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
 | github_token | :x: | `${{ github.token }}` | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
@@ -160,3 +161,12 @@ More documentation for writing a workflow can be found [here](https://help.githu
 ## Issues
 
 Please report all bugs and feature request using the [GitHub issues function](https://github.com/creyD/prettier_action/issues/new). Thanks!
+
+### Problem with NPM v9 (19.02.2023)
+
+This issue was discussed in https://github.com/creyD/prettier_action/issues/113. The action until release 4.2 uses the npm bin command, which apparently doesn't work on npm v9. A fix is introduced with v4.3 of this action. If you need an older version of the action working it works until v3.3 and between v3.3 and v4.2 you could use the workaround described in https://github.com/creyD/prettier_action/issues/113 by adding the below to your workflow file:
+
+```
+- name: Install npm v8
+  run: npm i -g npm@8
+```
