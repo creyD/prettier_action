@@ -161,3 +161,12 @@ More documentation for writing a workflow can be found [here](https://help.githu
 ## Issues
 
 Please report all bugs and feature request using the [GitHub issues function](https://github.com/creyD/prettier_action/issues/new). Thanks!
+
+### Problem with NPM v9 (19.02.2023)
+
+This issue was discussed in https://github.com/creyD/prettier_action/issues/113. The action until release 4.2 uses the npm bin command, which apparently doesn't work on npm v9. A fix is introduced with v4.3 of this action. If you need an older version of the action working it works until v3.3 and between v3.3 and v4.2 you could use the workaround described in https://github.com/creyD/prettier_action/issues/113 by adding the below to your workflow file:
+
+```
+- name: Install npm v8
+  run: npm i -g npm@8
+```
