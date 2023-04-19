@@ -60,7 +60,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -89,7 +89,7 @@ jobs:
           fetch-depth: 0
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -119,7 +119,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --write **/*.{js,md}
           only_changed: True
@@ -150,7 +150,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+        uses: creyD/prettier_action@v4.3
         with:
           dry: True
           github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
@@ -164,7 +164,7 @@ Please report all bugs and feature request using the [GitHub issues function](ht
 
 ### Problem with NPM v9 (19.02.2023)
 
-This issue was discussed in https://github.com/creyD/prettier_action/issues/113. The action until release 4.2 uses the npm bin command, which apparently doesn't work on npm v9. A fix is introduced with v4.3 of this action. If you need an older version of the action working it works until v3.3 and between v3.3 and v4.2 you could use the workaround described in https://github.com/creyD/prettier_action/issues/113 by adding the below to your workflow file:
+This issue was discussed in https://github.com/creyD/prettier_action/issues/113. The action until release 4 uses the npm bin command, which apparently doesn't work on npm v9. A fix is introduced with v4.3 of this action. If you need an older version of the action working it works until v3.3 and between v3.3 and v4.2 you could use the workaround described in https://github.com/creyD/prettier_action/issues/113 by adding the below to your workflow file:
 
 ```
 - name: Install npm v8
