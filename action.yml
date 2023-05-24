@@ -41,7 +41,7 @@ inputs:
   working_directory:
     description: Specify a directory to cd into before installing prettier and running it
     required: false
-    default: false
+    default: ${{ github.action_path }}
   only_changed:
     description: Only prettify files changed in the last commit, can't be used with file_pattern!
     required: false

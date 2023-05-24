@@ -29,17 +29,9 @@ _git_changed() {
 (
 # PROGRAM
 # Changing to the directory
-cd "$GITHUB_ACTION_PATH"
+cd "$INPUT_WORKING_DIRECTORY"
 
 echo "Installing prettier..."
-
-case $INPUT_WORKING_DIRECTORY in
-    false)
-        ;;
-    *)
-        cd $INPUT_WORKING_DIRECTORY
-        ;;
-esac
 
 npm install --silent prettier@$INPUT_PRETTIER_VERSION
 
