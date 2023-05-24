@@ -16,8 +16,8 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | Parameter | Required | Default | Description |
 | - | :-: | :-: | - |
 | dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. Recommended to use with prettier_options --check |
-| prettier_version | :x: | `false` | Specific prettier version (by default use latest) |
-| working_directory | :x: | `false` | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
+| prettier_version | :x: | `latest` | Specific prettier version (by default use latest) |
+| working_directory | :x: | - | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
 | prettier_options | :x: | `"--write **/*.js"` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
 | push_options | :x: | - | Custom git push options |

@@ -37,7 +37,7 @@ inputs:
   prettier_version:
     description: Specific version of prettier (by default just use the latest version)
     required: false
-    default: false
+    default: "latest"
   working_directory:
     description: Specify a directory to cd into before installing prettier and running it
     required: false

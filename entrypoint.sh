@@ -26,10 +26,6 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
-_git_changes() {
-    git diff
-}
-
 (
 # PROGRAM
 # Changing to the directory
@@ -45,14 +41,7 @@ case $INPUT_WORKING_DIRECTORY in
         ;;
 esac
 
-case $INPUT_PRETTIER_VERSION in
-    false)
-        npm install --silent prettier
-        ;;
-    *)
-        npm install --silent prettier@$INPUT_PRETTIER_VERSION
-        ;;
-esac
+npm install --silent prettier@$INPUT_PRETTIER_VERSION
 
 # Install plugins
 if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
@@ -97,7 +86,7 @@ if _git_changed; then
   # case when --write is used with dry-run so if something is unpretty there will always have _git_changed
   if $INPUT_DRY; then
     echo "Unpretty Files Changes:"
-    _git_changes
+    git diff
     echo "Finishing dry-run. Exiting before committing."
     exit 1
   else
