@@ -79,8 +79,12 @@ if _git_changed; then
   if $INPUT_DRY; then
     echo "Unpretty Files Changes:"
     git diff
-    echo "Finishing dry-run. Exiting before committing."
-    exit 1
+    if INPUT_DRY_NO_FAIL; then
+        echo "There are chaanges that won't be commited, you can use an external job to do so".
+    else
+        echo "Finishing dry-run. Exiting before committing."
+        exit 1
+    fi
   else
     # Calling method to configure the git environemnt
     _git_setup
