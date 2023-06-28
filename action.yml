@@ -34,6 +34,10 @@ inputs:
     description: Running the script in dry mode just shows whether there are files that should be prettified or not
     required: false
     default: false
+  dry_no_fail:
+    description: Dry mode do not exit the process in case of changes (so that other follow up actions can take care of commits)
+    required: false
+    default: false
   prettier_version:
     description: Specific version of prettier (by default just use the latest version)
     required: false
@@ -76,6 +80,7 @@ runs:
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
         INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
         INPUT_DRY: ${{ inputs.dry }}
+        INPUT_DRY_NO_FAIL: ${{ inputs.dry_no_fail }}
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
