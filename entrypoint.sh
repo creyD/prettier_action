@@ -103,7 +103,7 @@ if _git_changed; then
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
       git pull
-      git commit --amend --no-edit
+      git commit --amend --no-edit --allow-empty
       git push origin -f
     else
       if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]; then
