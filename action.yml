@@ -72,6 +72,7 @@ runs:
         INPUT_COMMIT_DESCRIPTION: ${{ inputs.commit_description }}
         INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
         INPUT_COMMIT_OPTIONS: ${{ inputs.commit_options }}
+        INPUT_PUSH_OPTIONS: ${{ inputs.push_options }}
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
         INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
         INPUT_DRY: ${{ inputs.dry }}
