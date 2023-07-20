@@ -34,6 +34,10 @@ inputs:
     description: Running the script in dry mode just shows whether there are files that should be prettified or not
     required: false
     default: false
+  no_commit:
+    description: Can be used to avoid committing the changes (can be combined with dry mode, useful when another workflow steps commits after this commit anyways)
+    required: false
+    default: false
   prettier_version:
     description: Specific version of prettier (by default just use the latest version)
     required: false
@@ -76,6 +80,7 @@ runs:
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
         INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
         INPUT_DRY: ${{ inputs.dry }}
+        INPUT_DRY_NO_COMMIT: ${{ inputs.no_commit }}
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
