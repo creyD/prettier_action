@@ -16,7 +16,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | Parameter | Required | Default | Description |
 | - | :-: | :-: | - |
 | dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. Recommended to use with prettier_options --check |
-| dry_no_fail | :x: | `false` | Don't exit the process in case of changes. This allows the commit and push to a repo to be handled by a follow up step |
+| no_commit | :x: | `false` | Can be used to avoid committing the changes (useful when another workflow step commits after this one anyways; can be combined with dry mode) |
 | prettier_version | :x: | `latest` | Specific prettier version (by default use latest) |
 | working_directory | :x: | `${{ github.action_path }}` | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
 | prettier_options | :x: | `"--write **/*.js"` | Prettier options (by default it applies to the whole repository) |

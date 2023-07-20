@@ -79,8 +79,8 @@ if _git_changed; then
   if $INPUT_DRY; then
     echo "Unpretty Files Changes:"
     git diff
-    if $INPUT_DRY_NO_FAIL; then
-        echo "There are changes that won't be commited, you can use an external job to do so".
+    if $INPUT_NO_COMMIT; then
+        echo "There are changes that won't be commited, you can use an external job to do so."
     else
         echo "Finishing dry-run. Exiting before committing."
         exit 1
@@ -101,6 +101,11 @@ if _git_changed; then
     else
       # Add changes to git
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+    fi
+
+    if $INPUT_NO_COMMIT; then
+      echo "There are changes that won't be commited, you can use an external job to do so."
+      exit 0
     fi
 
     # Commit and push changes back
