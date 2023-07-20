@@ -80,7 +80,7 @@ runs:
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
         INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
         INPUT_DRY: ${{ inputs.dry }}
-        INPUT_DRY_NO_COMMIT: ${{ inputs.no_commit }}
+        INPUT_NO_COMMIT: ${{ inputs.no_commit }}
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
