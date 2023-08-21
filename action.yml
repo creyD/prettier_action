@@ -62,6 +62,10 @@ inputs:
     description: Remove the node_modules folder before committing changes
     required: false
     default: true
+  git_identity:
+    description: Which identity is used for git name/email
+    required: false
+    default: "actions"
 
 runs:
   using: "composite"
@@ -87,6 +91,7 @@ runs:
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
+        INPUT_GIT_IDENTITY: ${{ inputs.git_identity }}
 
 branding:
   icon: "award"
