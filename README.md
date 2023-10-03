@@ -172,3 +172,7 @@ This issue was discussed in https://github.com/creyD/prettier_action/issues/113.
 - name: Install npm v8
   run: npm i -g npm@8
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date)](https://star-history.com/#creyD/prettier_action&Date)
