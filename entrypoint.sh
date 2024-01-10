@@ -17,8 +17,17 @@ _git_setup ( ) {
 EOF
     chmod 600 $HOME/.netrc
 
-    git config --global user.email "actions@github.com"
-    git config --global user.name "GitHub Action"
+    # If GIT_IDENTITY="actor"
+    if [ "$INPUT_GIT_IDENTITY" = "author" ]; then
+      git config --global user.name "$GITHUB_ACTOR"
+      git config --global user.email "$GITHUB_ACTOR@@users.noreply.github.com"
+    elif [ "$INPUT_GIT_IDENTITY" = "actions" ]; then
+      git config --global user.email "actions@github.com"
+      git config --global user.name "GitHub Action"
+    else
+      echo "GIT_IDENTITY must be either 'actor' or 'actions'";
+      exit 1;
+    fi;
 }
 
 # Checks if any files are changed
@@ -26,33 +35,14 @@ _git_changed() {
     [[ -n "$(git status -s)" ]]
 }
 
-_git_changes() {
-    git diff
-}
-
 (
 # PROGRAM
 # Changing to the directory
-cd "$GITHUB_ACTION_PATH"
+cd "$INPUT_WORKING_DIRECTORY"
 
 echo "Installing prettier..."
 
-case $INPUT_WORKING_DIRECTORY in
-    false)
-        ;;
-    *)
-        cd $INPUT_WORKING_DIRECTORY
-        ;;
-esac
-
-case $INPUT_PRETTIER_VERSION in
-    false)
-        npm install --silent prettier
-        ;;
-    *)
-        npm install --silent prettier@$INPUT_PRETTIER_VERSION
-        ;;
-esac
+npm install --silent prettier@$INPUT_PRETTIER_VERSION
 
 # Install plugins
 if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
@@ -72,7 +62,7 @@ PRETTIER_RESULT=0
 echo "Prettifying files..."
 echo "Files:"
 prettier $INPUT_PRETTIER_OPTIONS \
-  || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; }
+  || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; } >> $GITHUB_STEP_SUMMARY
 
 echo "Prettier result: $PRETTIER_RESULT"
 
@@ -87,7 +77,7 @@ if $INPUT_CLEAN_NODE_FOLDER; then
 fi
 
 if [ -f 'package-lock.json' ]; then
-  git checkout -- package-lock.json
+  git checkout -- package-lock.json || echo "No package-lock.json file tracked by git."
 else
   echo "No package-lock.json file."
 fi
@@ -97,9 +87,13 @@ if _git_changed; then
   # case when --write is used with dry-run so if something is unpretty there will always have _git_changed
   if $INPUT_DRY; then
     echo "Unpretty Files Changes:"
-    _git_changes
-    echo "Finishing dry-run. Exiting before committing."
-    exit 1
+    git diff
+    if $INPUT_NO_COMMIT; then
+        echo "There are changes that won't be commited, you can use an external job to do so."
+    else
+        echo "Finishing dry-run. Exiting before committing."
+        exit 1
+    fi
   else
     # Calling method to configure the git environemnt
     _git_setup
@@ -118,11 +112,16 @@ if _git_changed; then
       git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
     fi
 
+    if $INPUT_NO_COMMIT; then
+      echo "There are changes that won't be commited, you can use an external job to do so."
+      exit 0
+    fi
+
     # Commit and push changes back
     if $INPUT_SAME_COMMIT; then
       echo "Amending the current commit..."
       git pull
-      git commit --amend --no-edit
+      git commit --amend --no-edit --allow-empty
       git push origin -f
     else
       if [ "$INPUT_COMMIT_DESCRIPTION" != "" ]; then
