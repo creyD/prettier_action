@@ -77,7 +77,7 @@ if $INPUT_CLEAN_NODE_FOLDER; then
 fi
 
 if [ -f 'package-lock.json' ]; then
-  git checkout -- package-lock.json
+  git checkout -- package-lock.json || echo "No package-lock.json file tracked by git."
 else
   echo "No package-lock.json file."
 fi
