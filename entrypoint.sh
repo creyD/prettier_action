@@ -84,9 +84,15 @@ fi
 
 # If running under only_changed, reset every modified file that wasn't also modified in the last commit
 # This allows only_changed and dry to work together, and simplified the non-dry logic below
-if $INPUT_ONLY_CHANGED; then
+if [ $INPUT_ONLY_CHANGED = true -o $INPUT_ONLY_CHANGED_PR = true ] ; then
+  BASE_BRANCH=origin/$GITHUB_BASE_REF
+  if $INPUT_ONLY_CHANGED; then
+    BASE_BRANCH=HEAD~1
+  fi
+
+  echo "Resetting changes, removing changes to files not changed since $BASE_BRANCH"
   # list of all files changed in the previous commit
-  git diff --name-only HEAD HEAD~1 > /tmp/prev.txt
+  git diff --name-only HEAD $BASE_BRANCH > /tmp/prev.txt
   # list of all files with outstanding changes
   git diff --name-only HEAD > /tmp/cur.txt
 
@@ -119,7 +125,6 @@ if _git_changed; then
 
     # Add changes to git
     git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
-
 
     if $INPUT_NO_COMMIT; then
       echo "There are changes that won't be commited, you can use an external job to do so."
