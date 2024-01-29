@@ -38,6 +38,9 @@ _git_changed() {
 (
 # PROGRAM
 # Changing to the directory
+if [ -z "$INPUT_WORKING_DIRECTORY" ] ; then
+  INPUT_WORKING_DIRECTORY=$GITHUB_ACTION_PATH
+fi
 cd "$INPUT_WORKING_DIRECTORY"
 
 echo "Installing prettier..."
