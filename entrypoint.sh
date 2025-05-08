@@ -20,12 +20,12 @@ EOF
     # If GIT_IDENTITY="actor"
     if [ "$INPUT_GIT_IDENTITY" = "author" ]; then
       git config --global user.name "$GITHUB_ACTOR"
-      git config --global user.email "$GITHUB_ACTOR@@users.noreply.github.com"
+      git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
     elif [ "$INPUT_GIT_IDENTITY" = "actions" ]; then
       git config --global user.email "actions@github.com"
       git config --global user.name "GitHub Action"
     else
-      echo "GIT_IDENTITY must be either 'actor' or 'actions'";
+      echo "GIT_IDENTITY must be either 'author' or 'actions'";
       exit 1;
     fi;
 }

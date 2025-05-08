@@ -67,7 +67,7 @@ inputs:
     required: false
     default: true
   git_identity:
-    description: Which identity is used for git name/email
+    description: Which identity is used for git name/email when committing changes. Needs to be one of "actions" or "author".
     required: false
     default: "actions"
 
