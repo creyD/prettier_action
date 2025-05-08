@@ -87,7 +87,7 @@ fi
 
 # If running under only_changed, reset every modified file that wasn't also modified in the last commit
 # This allows only_changed and dry to work together, and simplified the non-dry logic below
-if [ $INPUT_ONLY_CHANGED = true] || [$INPUT_ONLY_CHANGED_PR = true ] ; then
+if [ $INPUT_ONLY_CHANGED = true ] || [$INPUT_ONLY_CHANGED_PR = true ] ; then
   BASE_BRANCH=origin/$GITHUB_BASE_REF
   if $INPUT_ONLY_CHANGED; then
     BASE_BRANCH=HEAD~1
