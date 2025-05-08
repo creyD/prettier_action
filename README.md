@@ -172,4 +172,10 @@ This issue was discussed in https://github.com/creyD/prettier_action/issues/113.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date)](https://star-history.com/#creyD/prettier_action&Date)
+<a href="https://www.star-history.com/#creyD/prettier_action&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date" />
+ </picture>
+</a>
