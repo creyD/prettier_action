@@ -1,7 +1,7 @@
 # GitHub Prettier Action
 
 [![CodeFactor](https://www.codefactor.io/repository/github/creyd/prettier_action/badge/master)](https://www.codefactor.io/repository/github/creyd/prettier_action/overview/master)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba5fa97677ee47e48efdc2e6f7493c49)](https://app.codacy.com/gh/creyD/prettier_action/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![License MIT](https://img.shields.io/github/license/creyD/prettier_action)](https://github.com/creyD/prettier_action/blob/master/LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/creyD/prettier_action)](https://github.com/creyD/prettier_action/releases)
 [![Contributors](https://img.shields.io/github/contributors-anon/creyD/prettier_action)](https://github.com/creyD/prettier_action/graphs/contributors)
@@ -16,8 +16,9 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | Parameter | Required | Default | Description |
 | - | :-: | :-: | - |
 | dry | :x: | `false` | Runs the action in dry mode. Files wont get changed and the action fails if there are unprettified files. Recommended to use with prettier_options --check |
-| prettier_version | :x: | `false` | Specific prettier version (by default use latest) |
-| working_directory | :x: | `false` | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
+| no_commit | :x: | `false` | Can be used to avoid committing the changes (useful when another workflow step commits after this one anyways; can be combined with dry mode) |
+| prettier_version | :x: | `latest` | Specific prettier version (by default use latest) |
+| working_directory | :x: | `${{ github.action_path }}` | Specify a directory to cd into before installing prettier and running it, use relative file path to the repository root for example `app/` |
 | prettier_options | :x: | `"--write **/*.js"` | Prettier options (by default it applies to the whole repository) |
 | commit_options | :x: | - | Custom git commit options |
 | push_options | :x: | - | Custom git push options |
@@ -29,6 +30,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | clean_node_folder | :x: | `true` | Delete the node_modules folder before committing |
 | only_changed | :x: | `false` | Only prettify changed files, can't be used with file_pattern! This command works only with the checkout action set to fetch depth '0' (see example 2)|
 | github_token | :x: | `${{ github.token }}` | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+| git_identity | :x: | `actions` | Set to `author` to use author's user as committer. This allows triggering [further workflow runs](https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs) 
 
 > Note: using the same_commit option may lead to problems if other actions are relying on the commit being the same before and after the prettier action has ran. Keep this in mind.
 
@@ -54,13 +56,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          # Make sure the actual branch is checked out when running on pull requests
-          ref: ${{ github.head_ref }}
+        uses: actions/checkout@v4
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -81,7 +80,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
@@ -89,7 +88,7 @@ jobs:
           fetch-depth: 0
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -111,7 +110,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -119,7 +118,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           prettier_options: --write **/*.{js,md}
           only_changed: True
@@ -142,7 +141,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -150,7 +149,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           dry: True
           github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
@@ -170,3 +169,13 @@ This issue was discussed in https://github.com/creyD/prettier_action/issues/113.
 - name: Install npm v8
   run: npm i -g npm@8
 ```
+
+## Star History
+
+<a href="https://www.star-history.com/#creyD/prettier_action&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=creyD/prettier_action&type=Date" />
+ </picture>
+</a>

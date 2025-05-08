@@ -23,7 +23,7 @@ inputs:
     description: Git push options
     required: false
   file_pattern:
-    description: File pattern used for `git add`, can't be used with only_changed!
+    description: File pattern used for `git add`, can't be used with only_changed or only_changed_pr!
     required: false
     default: "*"
   prettier_options:
@@ -34,16 +34,24 @@ inputs:
     description: Running the script in dry mode just shows whether there are files that should be prettified or not
     required: false
     default: false
+  no_commit:
+    description: Can be used to avoid committing the changes (can be combined with dry mode, useful when another workflow steps commits after this commit anyways)
+    required: false
+    default: false
   prettier_version:
     description: Specific version of prettier (by default just use the latest version)
     required: false
-    default: false
+    default: "latest"
   working_directory:
     description: Specify a directory to cd into before installing prettier and running it
     required: false
-    default: false
+    default: ${{ github.action_path }}
   only_changed:
     description: Only prettify files changed in the last commit, can't be used with file_pattern!
+    required: false
+    default: false
+  only_changed_pr:
+    description: Only prettify files changed in the current PR.  If specified with only_changed, only_changed will take precedent. Can't be used with file_pattern!
     required: false
     default: false
   prettier_plugins:
@@ -58,6 +66,10 @@ inputs:
     description: Remove the node_modules folder before committing changes
     required: false
     default: true
+  git_identity:
+    description: Which identity is used for git name/email when committing changes. Needs to be one of "actions" or "author".
+    required: false
+    default: "actions"
 
 runs:
   using: "composite"
@@ -72,15 +84,19 @@ runs:
         INPUT_COMMIT_DESCRIPTION: ${{ inputs.commit_description }}
         INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
         INPUT_COMMIT_OPTIONS: ${{ inputs.commit_options }}
+        INPUT_PUSH_OPTIONS: ${{ inputs.push_options }}
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}
         INPUT_PRETTIER_OPTIONS: ${{ inputs.prettier_options }}
         INPUT_DRY: ${{ inputs.dry }}
+        INPUT_NO_COMMIT: ${{ inputs.no_commit }}
         INPUT_PRETTIER_VERSION: ${{ inputs.prettier_version }}
         INPUT_ONLY_CHANGED: ${{ inputs.only_changed }}
+        INPUT_ONLY_CHANGED_PR: ${{ inputs.only_changed_pr }}
         INPUT_PRETTIER_PLUGINS: ${{ inputs.prettier_plugins }}
         INPUT_WORKING_DIRECTORY: ${{ inputs.working_directory }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
+        INPUT_GIT_IDENTITY: ${{ inputs.git_identity }}
 
 branding:
   icon: "award"
