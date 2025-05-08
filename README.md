@@ -57,12 +57,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # Make sure the actual branch is checked out when running on pull requests
-          ref: ${{ github.head_ref }}
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -91,7 +88,7 @@ jobs:
           fetch-depth: 0
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -121,7 +118,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           prettier_options: --write **/*.{js,md}
           only_changed: True
@@ -152,7 +149,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@v4.4
         with:
           dry: True
           github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
