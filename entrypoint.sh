@@ -49,14 +49,16 @@ npm install --silent prettier@$INPUT_PRETTIER_VERSION
 
 # Install plugins
 if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
-    for plugin in $INPUT_PRETTIER_PLUGINS; do
-        echo "Checking plugin: $plugin"
-        # check regex against @prettier/xyz
-        if ! echo "$plugin" | grep -Eq '(@prettier\/plugin-|(@[a-z\-]+\/)?prettier-plugin-){1}([a-z\-]+)'; then
-            echo "$plugin does not seem to be a valid @prettier/plugin-x plugin. Exiting."
-            exit 1
-        fi
-    done
+    if [ "$INPUT_ALLOW_OTHER_PLUGINS" != "true" ]; then
+        for plugin in $INPUT_PRETTIER_PLUGINS; do
+            echo "Checking plugin: $plugin"
+            # check regex against @prettier/xyz
+            if ! echo "$plugin" | grep -Eq '(@prettier\/plugin-|(@[a-z\-]+\/)?prettier-plugin-){1}([a-z\-]+)'; then
+                echo "$plugin does not seem to be a valid @prettier/plugin-x plugin. Exiting."
+                exit 1
+            fi
+        done
+    fi
     npm install --silent $INPUT_PRETTIER_PLUGINS
 fi
 )
@@ -87,7 +89,7 @@ fi
 
 # If running under only_changed, reset every modified file that wasn't also modified in the last commit
 # This allows only_changed and dry to work together, and simplified the non-dry logic below
-if [ $INPUT_ONLY_CHANGED = true ] || [$INPUT_ONLY_CHANGED_PR = true ] ; then
+if [ $INPUT_ONLY_CHANGED = true ] || [ $INPUT_ONLY_CHANGED_PR = true ] ; then
   BASE_BRANCH=origin/$GITHUB_BASE_REF
   if $INPUT_ONLY_CHANGED; then
     BASE_BRANCH=HEAD~1

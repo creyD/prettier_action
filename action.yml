@@ -70,6 +70,10 @@ inputs:
     description: Which identity is used for git name/email when committing changes. Needs to be one of "actions" or "author".
     required: false
     default: "actions"
+  allow_other_plugins:
+    description: Allow other plugins to be installed. By default, we are checking if the plugins are actually prettier plugins.
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -97,6 +101,7 @@ runs:
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
         INPUT_GIT_IDENTITY: ${{ inputs.git_identity }}
+        INPUT_ALLOW_OTHER_PLUGINS: ${{ inputs.allow_other_plugins }}
 
 branding:
   icon: "award"
