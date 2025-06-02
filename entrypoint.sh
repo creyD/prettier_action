@@ -66,7 +66,7 @@ fi
 PRETTIER_RESULT=0
 echo "Prettifying files..."
 echo "Files:"
-prettier $INPUT_PRETTIER_OPTIONS \
+npx prettier $INPUT_PRETTIER_OPTIONS \
   || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; } >> $GITHUB_STEP_SUMMARY
 
 echo "Prettier result: $PRETTIER_RESULT"
