@@ -60,7 +60,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.5
+        uses: creyD/prettier_action@v4.6
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -89,7 +89,7 @@ jobs:
           fetch-depth: 0
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.5
+        uses: creyD/prettier_action@v4.6
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,md}
@@ -119,7 +119,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.5
+        uses: creyD/prettier_action@v4.6
         with:
           prettier_options: --write **/*.{js,md}
           only_changed: True
@@ -150,7 +150,7 @@ jobs:
           persist-credentials: false
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.5
+        uses: creyD/prettier_action@v4.6
         with:
           dry: True
           github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
