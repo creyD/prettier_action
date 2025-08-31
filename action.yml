@@ -16,6 +16,9 @@ inputs:
     description: Update the current commit instead of creating a new one
     required: false
     default: false
+  add_options:
+    description: Git add options
+    required: false
   commit_options:
     description: Commit options
     required: false
@@ -87,6 +90,7 @@ runs:
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
         INPUT_COMMIT_DESCRIPTION: ${{ inputs.commit_description }}
         INPUT_SAME_COMMIT: ${{ inputs.same_commit }}
+        INPUT_ADD_OPTIONS: ${{ inputs.add_options }}
         INPUT_COMMIT_OPTIONS: ${{ inputs.commit_options }}
         INPUT_PUSH_OPTIONS: ${{ inputs.push_options }}
         INPUT_FILE_PATTERN: ${{ inputs.file_pattern }}

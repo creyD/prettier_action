@@ -129,7 +129,7 @@ if _git_changed; then
     _git_setup
 
     # Add changes to git
-    git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+    git add ${INPUT_ADD_OPTIONS:+"$INPUT_ADD_OPTIONS"} "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
 
     if $INPUT_NO_COMMIT; then
       echo "There are changes that won't be commited, you can use an external job to do so."
