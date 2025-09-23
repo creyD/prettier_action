@@ -125,11 +125,11 @@ if _git_changed; then
         exit 1
     fi
   else
-    # Calling method to configure the git environemnt
+    # Calling method to configure the git environment
     _git_setup
 
     # Add changes to git
-    git add "${INPUT_FILE_PATTERN}" || echo "Problem adding your files with pattern ${INPUT_FILE_PATTERN}"
+    git add ${INPUT_ADD_OPTIONS:+"$INPUT_ADD_OPTIONS"} "${INPUT_FILE_PATTERN}" || echo -e "Problem adding your files via 'git add':\n  flags: ${INPUT_ADD_OPTIONS:+"$INPUT_ADD_OPTIONS"}\n  pattern: ${INPUT_FILE_PATTERN}"
 
     if $INPUT_NO_COMMIT; then
       echo "There are changes that won't be commited, you can use an external job to do so."
