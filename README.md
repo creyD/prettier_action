@@ -158,6 +158,73 @@ jobs:
 
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).
 
+## Testing
+
+This project includes comprehensive test coverage using [BATS (Bash Automated Testing System)](https://github.com/bats-core/bats-core).
+
+### Running Tests Locally
+
+To run the tests locally, execute the test runner script:
+
+```bash
+./tests/run_tests.sh
+```
+
+This script will automatically:
+1. Install BATS and required dependencies if not already present
+2. Run all unit tests
+3. Run plugin validation tests
+4. Run integration tests
+
+### Test Structure
+
+The test suite is organized into three main categories:
+
+- **`tests/unit_tests.bats`** - Unit tests for bash functions in `entrypoint.sh`
+  - Tests for `_git_setup()` function with different identity configurations
+  - Tests for `_git_changed()` function for detecting file changes
+
+- **`tests/plugin_validation_tests.bats`** - Tests for Prettier plugin validation logic
+  - Validates official `@prettier/plugin-*` format
+  - Validates community `prettier-plugin-*` format
+  - Validates scoped `@scope/prettier-plugin-*` format
+  - Ensures invalid plugin names are rejected
+
+- **`tests/integration_tests.bats`** - Integration tests for end-to-end workflows
+  - Tests working directory handling
+  - Tests node_modules cleanup
+  - Tests package-lock.json restoration
+  - Tests file filtering for `only_changed` mode
+  - Tests dry run behavior
+
+### Manual BATS Installation
+
+If you prefer to install BATS manually:
+
+```bash
+cd tests
+./run_tests.sh --install-only
+```
+
+Then run individual test files:
+
+```bash
+./tests/bats/bin/bats tests/unit_tests.bats
+./tests/bats/bin/bats tests/plugin_validation_tests.bats
+./tests/bats/bin/bats tests/integration_tests.bats
+```
+
+### Continuous Integration
+
+Tests are automatically run on every push and pull request via GitHub Actions. See [`.github/workflows/test.yml`](.github/workflows/test.yml) for the CI configuration.
+
+The CI workflow includes:
+- Unit tests
+- Plugin validation tests
+- Integration tests
+- End-to-end action testing in dry mode
+- ShellCheck linting for bash scripts
+
 ## Issues
 
 Please report all bugs and feature request using the [GitHub issues function](https://github.com/creyD/prettier_action/issues/new). Thanks!

@@ -1,0 +1,81 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ master, dev, 'claude/**' ]
+  pull_request:
+    branches: [ master, dev ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run BATS Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Install BATS
+        run: |
+          cd tests
+          ./run_tests.sh --install-only
+
+      - name: Run unit tests
+        run: |
+          cd tests
+          ./bats/bin/bats unit_tests.bats
+
+      - name: Run plugin validation tests
+        run: |
+          cd tests
+          ./bats/bin/bats plugin_validation_tests.bats
+
+      - name: Run integration tests
+        run: |
+          cd tests
+          ./bats/bin/bats integration_tests.bats
+
+      - name: Run all tests with runner script
+        run: |
+          ./tests/run_tests.sh
+
+  test-action:
+    name: Test Action End-to-End
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create test files
+        run: |
+          echo "const x=1;const y=2;" > test.js
+          echo "function foo(){return 'bar';}" > test2.js
+
+      - name: Run prettier action in dry mode
+        uses: ./
+        with:
+          dry: true
+          prettier_options: "--write --check test*.js"
+          no_commit: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+          severity: warning

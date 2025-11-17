@@ -2,3 +2,6 @@
 .DS_Store
 # NPM
 node_modules/
+# Testing
+tests/bats/
+tests/test_temp_*/
