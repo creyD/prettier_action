@@ -63,6 +63,46 @@ if [ -n "$INPUT_PRETTIER_PLUGINS" ]; then
 fi
 )
 
+# Handle repository configuration files
+if [ "$INPUT_USE_REPO_CONFIG" = "true" ]; then
+  echo "Using repository prettier configuration..."
+
+  # Check for prettier config files
+  CONFIG_FOUND=false
+  for config_file in .prettierrc .prettierrc.json .prettierrc.yml .prettierrc.yaml .prettierrc.js .prettierrc.cjs .prettierrc.mjs prettier.config.js prettier.config.cjs prettier.config.mjs .prettierrc.toml; do
+    if [ -f "$config_file" ]; then
+      echo "  Found prettier config: $config_file"
+      CONFIG_FOUND=true
+      break
+    fi
+  done
+
+  # Check package.json for prettier config
+  if [ -f "package.json" ] && grep -q '"prettier"' package.json; then
+    echo "  Found prettier config in package.json"
+    CONFIG_FOUND=true
+  fi
+
+  if [ "$CONFIG_FOUND" = "false" ]; then
+    echo "  Warning: No prettier config file found. Prettier will use its default configuration."
+  fi
+
+  # Check for .prettierignore
+  if [ -f ".prettierignore" ]; then
+    echo "  Found .prettierignore file"
+  else
+    echo "  Note: No .prettierignore file found. All files will be processed."
+  fi
+
+  # When using repo config, if prettier_options is still the default, use a more sensible pattern
+  if [ "$INPUT_PRETTIER_OPTIONS" = "--write **/*.js" ]; then
+    echo "  Using default file pattern: . (current directory)"
+    INPUT_PRETTIER_OPTIONS="--write ."
+  else
+    echo "  Using custom prettier_options: $INPUT_PRETTIER_OPTIONS"
+  fi
+fi
+
 PRETTIER_RESULT=0
 echo "Prettifying files..."
 echo "Files:"

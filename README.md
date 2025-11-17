@@ -33,6 +33,7 @@ A GitHub action for styling files with [prettier](https://prettier.io).
 | github_token        |   :x:    |    `${{ github.token }}`    | The default [GITHUB_TOKEN](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret) or a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) |
 | git_identity        |   :x:    |          `actions`          | Set to `author` to use author's user as committer. This allows triggering [further workflow runs](https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs)                                                                       |
 | allow_other_plugins |   :x:    |           `false`           | Allow other plugins to be installed (prevents the @prettier-XYZ regex check)                                                                                                                                                                                                                       |
+| use_repo_config     |   :x:    |           `false`           | Automatically use the repository's prettier configuration files (.prettierrc, prettier.config.js, etc.) and .prettierignore. When enabled, prettier will search for and use config files in your repository, eliminating the need to specify `--config` or `--ignore-path` manually.                |
 
 > Note: using the same_commit option may lead to problems if other actions are relying on the commit being the same before and after the prettier action has ran. Keep this in mind.
 
@@ -155,6 +156,49 @@ jobs:
         with:
           dry: True
           github_token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+```
+
+#### Example 5 (using repository prettier configuration)
+
+This example demonstrates the `use_repo_config` option, which automatically detects and uses your repository's prettier configuration files (`.prettierrc`, `prettier.config.js`, etc.) and `.prettierignore` file.
+
+```yaml
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.6
+        with:
+          # Automatically use repository's prettier config and .prettierignore
+          use_repo_config: true
+```
+
+With `use_repo_config: true`, the action will:
+- Search for prettier configuration files in your repository (.prettierrc, prettier.config.js, package.json, etc.)
+- Automatically use your .prettierignore file if present
+- Apply prettier to all supported files in your repository
+- Warn you if no configuration file is found (prettier will use defaults)
+
+You can still customize the file pattern if needed:
+
+```yaml
+- name: Prettify code
+  uses: creyD/prettier_action@v4.6
+  with:
+    use_repo_config: true
+    prettier_options: --write "src/**/*.{js,ts,jsx,tsx}"
 ```
 
 More documentation for writing a workflow can be found [here](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions).

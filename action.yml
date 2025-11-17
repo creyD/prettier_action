@@ -77,6 +77,10 @@ inputs:
     description: Allow other plugins to be installed. By default, we are checking if the plugins are actually prettier plugins.
     required: false
     default: false
+  use_repo_config:
+    description: Use the repository's prettier configuration files (.prettierrc, prettier.config.js, etc.) and .prettierignore automatically. When enabled, prettier will search for config files in the repository.
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -106,6 +110,7 @@ runs:
         INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
         INPUT_GIT_IDENTITY: ${{ inputs.git_identity }}
         INPUT_ALLOW_OTHER_PLUGINS: ${{ inputs.allow_other_plugins }}
+        INPUT_USE_REPO_CONFIG: ${{ inputs.use_repo_config }}
 
 branding:
   icon: "award"
