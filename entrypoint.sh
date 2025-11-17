@@ -65,11 +65,26 @@ fi
 
 PRETTIER_RESULT=0
 echo "Prettifying files..."
-echo "Files:"
-npx prettier $INPUT_PRETTIER_OPTIONS \
-  || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; } >> $GITHUB_STEP_SUMMARY
+if [ "$INPUT_ONLY_SHOW_CHANGED" = "true" ]; then
+  # New behavior: don't show all files, only show changed files later
+  npx prettier $INPUT_PRETTIER_OPTIONS \
+    || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; }
+else
+  # Original behavior: show all files processed by prettier
+  echo "Files:"
+  npx prettier $INPUT_PRETTIER_OPTIONS \
+    || { PRETTIER_RESULT=$?; echo "Problem running prettier with $INPUT_PRETTIER_OPTIONS"; exit 1; } >> $GITHUB_STEP_SUMMARY
+fi
 
 echo "Prettier result: $PRETTIER_RESULT"
+
+# Show only the files that were changed by prettier (when flag is enabled)
+if [ "$INPUT_ONLY_SHOW_CHANGED" = "true" ] && _git_changed; then
+  echo ""
+  echo "Changed files:"
+  git status --short | tee -a $GITHUB_STEP_SUMMARY
+  echo ""
+fi
 
 # Removing the node_modules folder, so it doesn't get committed if it is not added in gitignore
 if $INPUT_CLEAN_NODE_FOLDER; then

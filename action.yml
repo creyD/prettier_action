@@ -74,6 +74,10 @@ inputs:
     description: Allow other plugins to be installed. By default, we are checking if the plugins are actually prettier plugins.
     required: false
     default: false
+  only_show_changed:
+    description: Only show files that were changed by Prettier instead of all processed files. Useful for large projects where output is overwhelming.
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -102,6 +106,7 @@ runs:
         INPUT_CLEAN_NODE_FOLDER: ${{ inputs.clean_node_folder }}
         INPUT_GIT_IDENTITY: ${{ inputs.git_identity }}
         INPUT_ALLOW_OTHER_PLUGINS: ${{ inputs.allow_other_plugins }}
+        INPUT_ONLY_SHOW_CHANGED: ${{ inputs.only_show_changed }}
 
 branding:
   icon: "award"
