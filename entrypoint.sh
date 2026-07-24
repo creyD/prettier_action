@@ -3,6 +3,10 @@
 # x would be for showing the commands before they are executed
 set -eu
 shopt -s globstar
+#if someone uses with: dotglob: tre, then the condition works
+if [ "$INPUT_DOTGLOB" = "true" ]; then
+  shopt -s dotglob
+fi
 
 # FUNCTIONS
 # Function for setting up git env in the docker container (copied from https://github.com/stefanzweifel/git-auto-commit-action/blob/master/entrypoint.sh)
